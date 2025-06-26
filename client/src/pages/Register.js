@@ -1,8 +1,33 @@
-import React from 'react'
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import {Link} from 'react-router-dom'
+import { RegisterUser } from "../apicalls/users";
+import React, { useEffect } from "react";
 
 function Register() {
+
+  // const navigate = useNavigate()
+
+  const submitForm = async (value)=>{
+    try {
+       const response =  await RegisterUser(value)
+        if(response.success){
+          message.success(response.message)
+        }else{
+          message.error(response.message)
+        }
+    } catch (error) {
+      console.log(error)
+    }
+    console.log(value)
+  }
+
+
+  // useEffect(()=>{
+  //   if(localStorage.getItem('token')){
+  //     navigate('/')
+  //   }
+  // }, [])
+
   return (
     <>
       <header className="App-header">
@@ -11,7 +36,7 @@ function Register() {
             <h1>Register to Turf Time</h1>
           </section>
           <section className="right-section">
-            <Form layout="vertical">
+            <Form layout="vertical" onFinish={submitForm}>
               <Form.Item
                 label="Name"
                 name="name"
