@@ -8,15 +8,24 @@ import { useSelector } from 'react-redux';
 
 function App() {
   const {loading} = useSelector((state)=>state.loader)
+  const {user} = userSelector((state)=>state.user)
   return (
     <div>
-      <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
-      </Routes>
-      </BrowserRouter>
+        {loading &&(
+            <div className="loader-container">
+          {" "}
+          <div className="loader"> </div>{" "}
+        </div>
+        )}
+      <div>
+        <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
+        </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }
