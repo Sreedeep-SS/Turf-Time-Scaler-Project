@@ -1,9 +1,10 @@
-import React from 'react'
-import {Form , Input , Button, message} from 'antd'
-import {Link} from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Form, Input, Button, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../apicalls/users";
 
 function Login() {
+  const navigate = useNavigate()
 
   const submitForm = async (value) => {
     try {
@@ -23,12 +24,19 @@ function Login() {
     }
   };
 
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      navigate('/')
+    }
+  } , [navigate])
+
   return (
     <>
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
-            <h1>Welcome back to BookMyShow</h1>
+            <h1>Welcome back to Turf</h1>
           </section>
           <section className="right-section">
             <Form layout="vertical" onFinish={submitForm}>
@@ -77,8 +85,8 @@ function Login() {
           </section>
         </main>
       </header>
-     </>
-  )
+    </>
+  );
 }
 
-export default Login
+export default Login;

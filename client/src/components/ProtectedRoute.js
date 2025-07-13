@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideLoading, showLoading } from "../redux/loadersSlice";
 import { getCurrentUser } from "../apicalls/users";
 import { Link, useNavigate } from "react-router-dom";
-import { setUser } from "../redux/userSilce";
+import { setUser } from "../redux/userSlice";
 import { Layout, Menu, message } from "antd";
 import { Header } from "antd/es/layout/layout";
 import {
@@ -81,7 +81,7 @@ function ProtectedRoute({ children }) {
     } else {
       navigate("/login");
     }
-  } , []);
+  } , [getValidUser, navigate]);
 
   return (
     user && (

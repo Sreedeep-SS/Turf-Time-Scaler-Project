@@ -1,13 +1,13 @@
-import { Form, Input, Button, message } from "antd";
-import {Link} from 'react-router-dom'
-import { RegisterUser } from "../apicalls/users";
 import React, { useEffect } from "react";
+import { Form, Input, Button, message } from "antd";
+import {Link, useNavigate} from 'react-router-dom'
+import { RegisterUser } from "../apicalls/users";
+
 
 function Register() {
+  const navigate = useNavigate()
 
-  // const navigate = useNavigate()
-
-  const submitForm = async (value)=>{
+  const submitForm= async (value)=>{
     try {
        const response =  await RegisterUser(value)
         if(response.success){
@@ -18,22 +18,22 @@ function Register() {
     } catch (error) {
       console.log(error)
     }
-    console.log(value)
   }
 
 
-  // useEffect(()=>{
-  //   if(localStorage.getItem('token')){
-  //     navigate('/')
-  //   }
-  // }, [])
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      navigate('/')
+    }
+  }, [navigate])
+
 
   return (
     <>
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
-            <h1>Register to Turf Time</h1>
+            <h1>Register to BookMyShow</h1>
           </section>
           <section className="right-section">
             <Form layout="vertical" onFinish={submitForm}>
@@ -97,4 +97,4 @@ function Register() {
   );
 }
 
-export default Register
+export default Register;
