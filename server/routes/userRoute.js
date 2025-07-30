@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
 
-    console.log(user);
+    console.log("Logged in user",user);
 
     if (!user) {
       return res.send({
@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
 
 router.get('/get-current-user' , authMiddleware, async (req , res)=>{
     const user = await User.findById(req.body.userId).select('-password')
-    console.log(user)
+    console.log("User data:", user)
 
     res.send({
        success : true,

@@ -81,12 +81,12 @@ function ProtectedRoute({ children }) {
     } else {
       navigate("/login");
     }
-  } , [getValidUser, navigate]);
+  } , []);
 
   return (
     user && (
-      <>
-        <Layout>
+      <>0
+``        <Layout>
           <Header
             className="d-flex justify-content-between"
             style={{
@@ -99,7 +99,7 @@ function ProtectedRoute({ children }) {
             }}
           >
             <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
-              Book My Show
+              Book My Turf
             </h3>
             <Menu theme="dark" mode="horizontal" items={navItems}></Menu>
           </Header>
