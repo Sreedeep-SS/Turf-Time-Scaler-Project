@@ -15,7 +15,7 @@ function App() {
   const {user} = useSelector((state)=>state.user)
 
   console.log(loading)
-  console.log(user)
+  console.log("App User", user)
   return (
     <div>
         {loading &&(

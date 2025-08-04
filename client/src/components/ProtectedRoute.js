@@ -23,7 +23,14 @@ function ProtectedRoute({ children }) {
 
   const navItems = [
     {
-      label: "Home",
+      label: (
+        <span 
+        onClick={() => {
+          navigate("/");
+        }}>
+          Home
+          </span>
+      ),
       icon: <HomeOutlined />,
     },
 
@@ -58,20 +65,26 @@ function ProtectedRoute({ children }) {
 
   const getValidUser = async () => {
     try {
-      dispatch(showLoading);
+      dispatch(showLoading());
       const response = await getCurrentUser();
       if (response.success) {
         dispatch(setUser(response.data))
+        dispatch(hideLoading());
+        if(!response.data.isAdmin){
+          alert("You are not an admin")
+          navigate('/')
+        }
 
       } else {
         dispatch(setUser(null));
-        message.error(response.message);
-        dispatch(hideLoading);
+        alert(response.message);
+        dispatch(hideLoading());
+        localStorage.clear()
       }
     } catch (error) {
-      dispatch(hideLoading);
+      dispatch(hideLoading());
       dispatch(setUser(null));
-      message.error(error.message);
+      alert("Exception while getting current session", error.message);
     }
   };
 
@@ -81,12 +94,12 @@ function ProtectedRoute({ children }) {
     } else {
       navigate("/login");
     }
-  } , []);
+  }, []);
 
   return (
     user && (
-      <>0
-``        <Layout>
+      <>
+      <Layout>
           <Header
             className="d-flex justify-content-between"
             style={{
@@ -101,10 +114,10 @@ function ProtectedRoute({ children }) {
             <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
               Book My Turf
             </h3>
-            <Menu theme="dark" mode="horizontal" items={navItems}></Menu>
+            <Menu theme="dark" mode="horizontal" items={navItems}/>;
           </Header>
 
-          <div style={{ padding: 24, minHeight: 380, background: "#fff" }}>
+          <div style={{ padding: 24, minHeight: 1000, background: "#fff" }}>
             {children}
           </div>
         </Layout>
