@@ -7,6 +7,7 @@ const app = express()
 const PORT = 5003
 
 const userRoutes = require('./routes/userRoute')
+const turfRoutes = require('./routes/turfRoute')
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connected"))
