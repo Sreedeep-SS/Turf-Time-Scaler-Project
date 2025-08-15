@@ -32,6 +32,6 @@ const bookingSchema = new mongoose.Schema({
     }
 }, {timestamps:true});
 
-const Booking = mongoose.model("bookings", turfSchema);
+const Booking = mongoose.model("bookings", bookingSchema);
 
 module.exports = Booking;

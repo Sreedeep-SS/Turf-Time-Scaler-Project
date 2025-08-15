@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Turf = require("../models/turfModel");
+const Turf = require('../models/turfModel');
+const Booking = require('../models/bookingModel')
 
 router.post('/add-turf', async(req, res) =>{
     try {
