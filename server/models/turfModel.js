@@ -21,6 +21,11 @@ const turfSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users',
+    required: true
+    }
 }, {
     timestamps: true
 }

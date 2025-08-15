@@ -30,7 +30,7 @@ router.post('/book-venue', async(req, res) => {
         }
 
         const overlap = await Booking.findOne({
-            turf: turfId,
+            venue: turfId,
             date: bookingDate,
             $or: [
                 { startTime: { $lt: end }, endTime: { $gt: start } }
@@ -48,7 +48,7 @@ router.post('/book-venue', async(req, res) => {
         const totalPrice = turf.price * hours
 
         const newBooking = await Booking.create({
-            turf: turfId,
+            venue: turfId,
             user: userId,
             date: bookingDate,
             startTime: start,
@@ -73,12 +73,12 @@ router.post('/book-venue', async(req, res) => {
 
 })
 
-router.get('my-bookings', async(req, res) => {
+router.get('/my-bookings', async(req, res) => {
     try {
         const userId = req.body.id
 
         const myBookings = await Booking.find({ user: userId })
-            .populate('turf', 'name location price')
+            .populate('venue', 'name location price')
             .sort({ date: -1 })
 
         res.status(200).send({
@@ -110,7 +110,7 @@ router.get('/admin-bookings', async(req, res) => {
         }
 
         const bookings = await Booking.find({ turf: { $in: turfIds } })
-            .populate('turf', 'name location')
+            .populate('venue', 'name location')
             .populate('user', 'name email')
             .sort({ date: 1, startTime: 1 });
 

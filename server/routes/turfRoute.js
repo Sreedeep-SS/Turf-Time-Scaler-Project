@@ -117,7 +117,7 @@ router.get('/:id/availability', async (req, res) => {
         ];
 
         const booked = await Booking.find({
-            turf: id,
+            venue: id,
             date: new Date(date)
         }).select('slot');
 
