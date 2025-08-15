@@ -32,6 +32,28 @@ const bookingSchema = new mongoose.Schema({
     }
 }, {timestamps:true});
 
+bookingSchema.pre('save', async function (next) {
+    const booking = this;
+
+    
+    if (booking.endTime <= booking.startTime) {
+        return next(new Error('End time must be after start time'));
+    }
+
+    const overlap = await mongoose.model('bookings').findOne({
+        venue: booking.venue,
+        date: booking.date,
+        startTime: { $lt: booking.endTime },
+        endTime: { $gt: booking.startTime }
+    });
+
+    if (overlap) {
+        return next(new Error('Slot already booked'));
+    }
+
+    next();
+});
+
 const Booking = mongoose.model("bookings", bookingSchema);
 
 module.exports = Booking;

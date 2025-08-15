@@ -19,30 +19,9 @@ router.post('/book-venue', async(req, res) => {
         }
 
         const bookingDate = new Date(date)
+        bookingDate.setUTCHours(0, 0, 0, 0);
         const start = new Date(`${date}T${startTime}:00`);
         const end = new Date(`${date}T${endTime}:00`);
-
-        if(end <= start) {
-            return res.status(400).send({
-                success: false,
-                message: 'End time must be after start time'
-            })
-        }
-
-        const overlap = await Booking.findOne({
-            venue: turfId,
-            date: bookingDate,
-            $or: [
-                { startTime: { $lt: end }, endTime: { $gt: start } }
-            ]
-        })
-
-        if (overlap) {
-            return res.status(400).send({
-                success: false,
-                message: 'Slot already booked'
-            })
-        }
 
         const hours = (end - start)/ (1000 * 60 * 60)
         const totalPrice = turf.price * hours
@@ -109,7 +88,7 @@ router.get('/admin-bookings', async(req, res) => {
             });
         }
 
-        const bookings = await Booking.find({ turf: { $in: turfIds } })
+        const bookings = await Booking.find({ venue: { $in: turfIds } })
             .populate('venue', 'name location')
             .populate('user', 'name email')
             .sort({ date: 1, startTime: 1 });

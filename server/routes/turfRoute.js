@@ -119,9 +119,14 @@ router.get('/:id/availability', async (req, res) => {
         const booked = await Booking.find({
             venue: id,
             date: new Date(date)
-        }).select('slot');
+        })
 
-        const bookedSlots = booked.map(b => b.slot);
+        
+        const bookedSlots = booked.map(b => {
+        const startHour = b.startTime.getHours().toString().padStart(2, '0');
+        const endHour = b.endTime.getHours().toString().padStart(2, '0');
+        return `${startHour}:00-${endHour}:00`;
+        });
 
         const availableSlots = allSlots.filter(s => !bookedSlots.includes(s));
 
