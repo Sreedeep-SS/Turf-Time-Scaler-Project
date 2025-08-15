@@ -95,4 +95,39 @@ router.get('my-bookings', async(req, res) => {
     }
 })
 
+router.get('/admin-bookings', async(req, res) => {
+    try{
+        const adminId = req.body.id
+
+        const turfs = await Turf.find({ owner: adminId }).select('_id');
+        const turfIds = turfs.map(t => t._id);
+
+        if (!turfIds.length) {
+            return res.status(404).send({
+                success: false,
+                message: 'No turfs found for this admin'
+            });
+        }
+
+        const bookings = await Booking.find({ turf: { $in: turfIds } })
+            .populate('turf', 'name location')
+            .populate('user', 'name email')
+            .sort({ date: 1, startTime: 1 });
+
+        res.status(200).send({
+            success: true,
+            message: 'Admin bookings fetched successfully',
+            data: bookings
+        })
+    }
+    catch (error){
+        res.status(500).send({
+            success: false,
+            message: error.message
+        });
+    }
+})
+
+
 module.exports = router
+
