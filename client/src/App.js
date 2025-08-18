@@ -24,7 +24,7 @@ function App() {
           <div className="loader"> </div>{" "}
         </div>
         )}
-      <div>
+      <div >
         <BrowserRouter>
         <Routes>
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>}/>

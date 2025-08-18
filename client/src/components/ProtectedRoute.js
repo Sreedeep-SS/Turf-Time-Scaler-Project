@@ -109,6 +109,8 @@ function ProtectedRoute({ children }) {
               width: "100%",
               display: "flex",
               alignItems: "center",
+              height: "80px",
+              padding: "0 24px", 
             }}
           >
             <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
@@ -117,7 +119,7 @@ function ProtectedRoute({ children }) {
             <Menu theme="dark" mode="horizontal" items={navItems}/>;
           </Header>
 
-          <div style={{ padding: 24, minHeight: 1000, background: "#fff" }}>
+          <div style={{ minHeight: 1000, background: "#fff" }}>
             {children}
           </div>
         </Layout>
