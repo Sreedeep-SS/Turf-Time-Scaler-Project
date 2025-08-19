@@ -9,3 +9,12 @@ export const GetAllVenues = async() => {
         console.log(error)
     }
 }
+
+export const GetAdminTurfs = async (ownerId) => {
+  try {
+    const response = await axiosInstance.post("/api/turf/get-all-turfs-by-owner", { owner: ownerId });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -54,7 +54,7 @@ router.post('/book-venue', async(req, res) => {
 
 router.get('/my-bookings', authMiddleware, async(req, res) => {
     try {
-        const userId = req.body.id
+        const userId = req.body.userId
 
         const myBookings = await Booking.find({ user: userId })
             .populate('venue', 'name location price')
@@ -74,9 +74,10 @@ router.get('/my-bookings', authMiddleware, async(req, res) => {
     }
 })
 
-router.get('/admin-bookings', async(req, res) => {
+router.get('/admin-bookings',authMiddleware, async(req, res) => {
     try{
-        const adminId = req.body.id
+        const adminId = req.body.userId
+        const { turfId, status, date } = req.query;
 
         const turfs = await Turf.find({ owner: adminId }).select('_id');
         const turfIds = turfs.map(t => t._id);
@@ -88,7 +89,14 @@ router.get('/admin-bookings', async(req, res) => {
             });
         }
 
-        const bookings = await Booking.find({ venue: { $in: turfIds } })
+        const query = { venue: { $in: turfIds } };
+
+        if (turfId) query.venue = turfId;
+        if (status) query.paymentStatus = status; 
+        if (date) query.date = new Date(date);
+
+
+        const bookings = await Booking.find(query)
             .populate('venue', 'name location')
             .populate('user', 'name email')
             .sort({ date: 1, startTime: 1 });

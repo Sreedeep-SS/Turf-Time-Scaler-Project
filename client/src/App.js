@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './pages/Profile';
 import Admin from './pages/Admin';
+import AdminBookings from './pages/Admin/AdminBookings';
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/admin' element={<ProtectedRoute><Admin/></ProtectedRoute>}/>
           <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+          <Route path="/admin/bookings" element={<ProtectedRoute><AdminBookings/></ProtectedRoute>} />
         </Routes>
         </BrowserRouter>
       </div>
