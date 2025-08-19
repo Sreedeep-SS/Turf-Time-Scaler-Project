@@ -46,7 +46,7 @@ function Home() {
                   cover={
                     <img
                       alt={venue.name}
-                      src={venue.image || "https://via.placeholder.com/300"}
+                      src={venue.image || "https://5.imimg.com/data5/SELLER/Default/2023/10/350327019/NU/WB/TZ/38215148/7-a-side-football-turf.jpg"}
                       style={{ height: "200px", objectFit: "cover" }}
                     />
                   }

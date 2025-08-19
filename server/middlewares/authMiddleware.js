@@ -8,9 +8,6 @@ module.exports = function (req, res, next) {
     req.body = req.body || {};
     req.body.userId = verifiedToken.userId;
     console.log("From Middleware:", req.body)
-
-    
-
     next();
   } catch (error) {
     res.send({

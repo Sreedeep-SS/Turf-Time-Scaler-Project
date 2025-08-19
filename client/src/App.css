@@ -306,3 +306,9 @@ hr{
     margin-bottom: 1rem;
   }
 }
+
+.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-dark .ant-menu-submenu-selected {
+  background-color: transparent !important;
+  color: #fff !important;
+}

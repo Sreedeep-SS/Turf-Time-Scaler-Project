@@ -23,40 +23,24 @@ function ProtectedRoute({ children }) {
 
   const navItems = [
     {
-      label: (
-        <span 
-        onClick={() => {
-          navigate("/");
-        }}>
-          Home
-          </span>
-      ),
+      key: "home",
+      label: "Home",
       icon: <HomeOutlined />,
     },
 
     {
-      label: `${user ? user.name : " "}`,
+      key: "profile",
+      label: `${user ? user.name : "Guest"}`,
       icon: <UserOutlined />,
-
       children: [
         {
-          label: (
-            <span
-              onClick={() => {
-                user.isAdmin ? navigate("/admin") : navigate("/profile");
-              }}
-            >
-              My Profile
-            </span>
-          ),
+          key: "my-profile",
+          label: "My Profile",
           icon: <ProfileOutlined />,
         },
         {
-          label: (
-            <Link to="/login" onClick={() => localStorage.removeItem("token")}>
-              Log out
-            </Link>
-          ),
+          key: "logout",
+          label: "Log out",
           icon: <LogoutOutlined />,
         },
       ],
@@ -70,10 +54,10 @@ function ProtectedRoute({ children }) {
       if (response.success) {
         dispatch(setUser(response.data))
         dispatch(hideLoading());
-        if(!response.data.isAdmin){
-          alert("You are not an admin")
-          navigate('/')
-        }
+        // if(!response.data.isAdmin){
+        //   alert("You are not an admin")
+        //   navigate('/')
+        // }
 
       } else {
         dispatch(setUser(null));
@@ -116,7 +100,19 @@ function ProtectedRoute({ children }) {
             <h3 className="demo-logo text-white m-0" style={{ color: "white" }}>
               Book My Turf
             </h3>
-            <Menu theme="dark" mode="horizontal" items={navItems}/>;
+            <Menu 
+              theme="dark" 
+              mode="horizontal" 
+              items={navItems} 
+              onClick={({ key }) => {
+                if (key === "home") navigate("/");
+                if (key === "my-profile") navigate(user.isAdmin ? "/admin" : "/profile");
+                if (key === "logout") {
+                  localStorage.removeItem("token");
+                  navigate("/login");
+                }
+              }}
+            />;
           </Header>
 
           <div style={{ minHeight: 1000, background: "#fff" }}>

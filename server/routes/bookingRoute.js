@@ -52,7 +52,7 @@ router.post('/book-venue', async(req, res) => {
 
 })
 
-router.get('/my-bookings', async(req, res) => {
+router.get('/my-bookings', authMiddleware, async(req, res) => {
     try {
         const userId = req.body.id
 

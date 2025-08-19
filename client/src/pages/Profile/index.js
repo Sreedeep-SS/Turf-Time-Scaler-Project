@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import UserDetails from "./UserDetails";
+import Bookings from "./Bookings";
 
 function Profile() {
   return (
-    <div>This is User Profile</div>
-  )
+    <div style={{ padding: "24px" }}>
+      <UserDetails />
+      <Bookings />
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;
