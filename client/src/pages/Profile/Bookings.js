@@ -74,13 +74,22 @@ function Bookings() {
     {
       title: "Time",
       key: "time",
-      render: (record) => `${record.startTime} - ${record.endTime}`,
+      render: (record) => {
+      const start = new Date(record.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const end = new Date(record.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      return `${start} - ${end}`;
+        },
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
       render: (status) => {
+
+        if (!status) {
+          return <Tag color="default">UNKNOWN</Tag>;
+        }
+
         let color =
           status === "completed"
             ? "green"

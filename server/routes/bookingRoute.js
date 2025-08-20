@@ -89,6 +89,13 @@ router.get('/admin-bookings',authMiddleware, async(req, res) => {
             });
         }
 
+        if (turfId && !turfIds.map(id => id.toString()).includes(turfId)) {
+        return res.status(400).send({
+                success: false,
+                message: 'Invalid turfId or you are not authorized to view it',
+            });
+        }
+
         const query = { venue: { $in: turfIds } };
 
         if (turfId) query.venue = turfId;
